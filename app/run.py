@@ -39,33 +39,79 @@ model = joblib.load("../models/DisasterModel")
 @app.route('/index')
 def index():
 
-    # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
-    genre_counts = df.groupby('genre').count()['message']
-    genre_names = list(genre_counts.index)
+# Extract data needed for visuals
+genre_counts = df.groupby('genre').count()['message']
+genre_names = list(genre_counts.index)
 
-    # create visuals
-    # TODO: Below is an example - modify to create your own visuals
-    graphs = [
-        {
-            'data': [
-                Bar(
-                    x=genre_names,
-                    y=genre_counts
-                )
-            ],
+# Get related and unrelated dataframes
+related = df[df['related'] == 1]
+unrelated = df[df['related'] == 0]
 
-            'layout': {
-                'title': 'Distribution of Message Genres',
-                'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Genre"
-                }
+# Get top 5 category types not including related
+top_sorted_list = []
+for column in related.columns[4:]:
+    name_sum_pair = column,related[column].sum()
+    top_sorted_list.append(name_sum_pair)
+
+top_sorted_list.sort(key=lambda x: x[1],reverse=True)
+
+# Create visuals
+graphs = [
+    {
+        'data': [
+            Bar(
+                x=genre_names,
+                y=genre_counts
+            )
+        ],
+
+        'layout': {
+            'title': '',
+            'yaxis': {
+                'title': "Count"
+            },
+            'xaxis': {
+                'title': ""
             }
         }
-    ]
+    },
+    {
+        'data': [
+            Bar(
+                x=['related', 'unrelated'],
+                y=[related.shape[0], unrelated.shape[0]]
+            )
+        ],
+
+        'layout': {
+            'title': 'Distribution of Relation Types',
+            'yaxis': {
+                'title': "Count"
+            },
+            'xaxis': {
+                'title': "Type Of Message"
+            }
+        }
+    },
+    {
+        'data': [
+            Bar(
+                x=[x[0] for x in top_sorted_list][:5],
+                y=[y[1] for y in top_sorted_list][:5]
+            )
+        ],
+
+        'layout': {
+            'title': 'Distribution of Message Categories not including Related',
+            'yaxis': {
+                'title': "Count"
+            },
+            'xaxis': {
+                'title': "Category Of Message"
+            }
+        }
+    },
+]
 
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
