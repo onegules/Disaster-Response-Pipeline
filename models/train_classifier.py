@@ -18,6 +18,15 @@ nltk.download(['punkt','stopwords'])
 import pickle
 
 def load_data(database_filepath):
+    '''
+    INPUT:
+    database_filepath -  (str) The path to the database
+
+    OUTPUT:
+    X - (numpy array) An array of the messages column in the database
+    Y - (pandas dataframe) The columns corresponding to each message in database
+    columns - (list) A list of the columns of df
+    '''
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('DisasterResponse', engine)
     X = df.message.values
