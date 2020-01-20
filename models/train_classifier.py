@@ -9,13 +9,15 @@ from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, HashingVectorizer
+from sklearn.feature_extraction.text import CountVectorizer,
+    TfidfTransformer, HashingVectorizer
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.metrics import precision_recall_fscore_support as score
 import nltk
-nltk.download(['punkt','stopwords'])
 import pickle
+nltk.download(['punkt','stopwords'])
+
 
 def load_data(database_filepath):
     '''
@@ -30,7 +32,7 @@ def load_data(database_filepath):
     engine = create_engine('sqlite:///' + database_filepath)
     df = pd.read_sql_table('DisasterResponse', engine)
     X = df.message.values
-    Y = df.iloc[:,3:]
+    Y = df.iloc[:, 3:]
     columns = df.columns
 
     return X, Y, columns
@@ -49,7 +51,6 @@ def tokenize(text):
     return tokens
 
 
-
 def build_model():
     '''
     INPUT:
@@ -64,7 +65,7 @@ def build_model():
     '''
     # Create pipeline object
     pipeline = Pipeline([
-        ('vect', HashingVectorizer(tokenizer=tokenize,n_features=2**4)),
+        ('vect', HashingVectorizer(tokenizer=tokenize, n_features=2**4)),
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(RandomForestClassifier()))
     ])
@@ -74,7 +75,6 @@ def build_model():
     cv = GridSearchCV(pipeline, param_grid=parameters)
 
     return cv
-
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
@@ -97,7 +97,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     print('Note: The order of the results are [(For 0), (For 1)]\n')
     for i in range(len(predicted_categories)):
         print('For {}: \n'.format(predicted_categories[i]))
-        precision,recall,fscore,support = score(Y_test.iloc[:,i],y_pred[:,i])
+        precision,recall,fscore,support = score(Y_test.iloc[:,i],y_pred[:, i])
         print('f1-score: {}'.format(fscore))
         print('precision: {}'.format(precision))
         print('recall: {} \n\n'.format(recall))

@@ -1,21 +1,27 @@
-import json
-import plotly
-import pandas as pd
-import nltk
-nltk.download(['punkt','stopwords','wordnet'])
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
-
-
+import json
+import plotly
+import pandas as pd
+import nltk
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
+nltk.download(['punkt', 'stopwords', 'wordnet'])
 
 app = Flask(__name__)
 
+
 def tokenize(text):
+    '''
+    INPUT:
+    text - (str) The text to tokenize
+
+    OUTPUT:
+    clean_tokens - (list) A tokenized list of the text after normalizing it
+    '''
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -34,7 +40,7 @@ df = pd.read_sql_table('DisasterResponse', engine)
 model = joblib.load("../models/DisasterModel")
 
 
-# index webpage displays cool visuals and receives user input text for model
+# Index webpage displays cool visuals and receives user input text for model
 @app.route('/')
 @app.route('/index')
 def index():
@@ -50,10 +56,10 @@ def index():
     # Get top 5 category types not including related
     top_sorted_list = []
     for column in related.columns[4:]:
-        name_sum_pair = column,related[column].sum()
+        name_sum_pair = column, related[column].sum()
         top_sorted_list.append(name_sum_pair)
 
-    top_sorted_list.sort(key=lambda x: x[1],reverse=True)
+    top_sorted_list.sort(key=lambda x: x[1], reverse=True)
 
     # Create visuals
     graphs = [

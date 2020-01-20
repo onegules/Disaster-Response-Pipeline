@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
 
+
 def load_data(messages_filepath, categories_filepath):
     '''
     INPUT:
@@ -33,7 +34,7 @@ def clean_data(df):
     columns and uses the information in the column to place a 1 or a 0
     if the message (row) is part of that category
     '''
-    categories = df['categories'].str.split(';',expand=True)
+    categories = df['categories'].str.split(';', expand=True)
     # Select the first row of the categories dataframe
     row = categories.iloc[0]
 
@@ -60,8 +61,8 @@ def clean_data(df):
         pass
 
     # Drop the original categories column from `df`
-    df.drop('categories',axis=1,inplace=True)
-    df.drop('original',axis=1,inplace=True)
+    df.drop('categories', axis=1, inplace=True)
+    df.drop('original', axis=1, inplace=True)
 
     # Add the new categories columns to df
     df = pd.concat([df,categories], axis=1)
@@ -74,6 +75,14 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    '''
+    INPUT:
+    df - (pandas dataframe) df as defined in clean_data
+    database_filename - (str) The name to save the database as
+
+    OUTPUT:
+    None
+    '''
     engine = create_engine('sqlite:///' + database_filename)
     df.to_sql('DisasterResponse', engine, index=False)
 
