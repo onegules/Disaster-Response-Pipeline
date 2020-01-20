@@ -1,5 +1,21 @@
 import sys
 
+import pandas as pd
+import numpy as np
+from sqlalchemy import create_engine
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from sklearn.pipeline import Pipeline, FeatureUnion
+from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, HashingVectorizer
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.metrics import precision_recall_fscore_support as score
+import nltk
+nltk.download(['punkt','stopwords'])
+import pickle
 
 def load_data(database_filepath):
     pass
@@ -27,13 +43,13 @@ def main():
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-        
+
         print('Building model...')
         model = build_model()
-        
+
         print('Training model...')
         model.fit(X_train, Y_train)
-        
+
         print('Evaluating model...')
         evaluate_model(model, X_test, Y_test, category_names)
 
