@@ -2,6 +2,14 @@ import sys
 
 
 def load_data(messages_filepath, categories_filepath):
+    '''
+    INPUT:
+    messages_filepath - (str) The path to the disaster_messages.csv file
+    categories_filepath - (str) The path to the disaster_categories.csv file
+
+    OUTPUT:
+    df - (pandas dataframe) The dataframe given by the merged csv files
+    '''
     # Load the two csv files
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
