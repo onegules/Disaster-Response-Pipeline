@@ -35,7 +35,19 @@ def tokenize(text):
 
 
 def build_model():
-    pass
+    # Create pipeline object
+    pipeline = Pipeline([
+        ('vect', HashingVectorizer(tokenizer=tokenize,n_features=2**4)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', MultiOutputClassifier(RandomForestClassifier()))
+    ])
+    # Create a list of parameters to grid search
+    parameters = {'tfidf__smooth_idf':(True, False)}
+
+    cv = GridSearchCV(pipeline, param_grid=parameters)
+
+    return cv
+
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
