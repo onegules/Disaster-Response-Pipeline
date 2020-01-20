@@ -51,7 +51,18 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    pass
+    # Get the values predicted
+    y_pred = model.predict(X_test)
+    predicted_categories = category_names[3:]
+
+    # Print out the evaluation results
+    print('Note: The order of the results are [(For 0), (For 1)]\n')
+    for i in range(len(predicted_categories)):
+        print('For {}: \n'.format(predicted_categories[i]))
+        precision,recall,fscore,support = score(Y_test.iloc[:,i],y_pred[:,i])
+        print('f1-score: {}'.format(fscore))
+        print('precision: {}'.format(precision))
+        print('recall: {} \n\n'.format(recall))
 
 
 def save_model(model, model_filepath):
