@@ -18,7 +18,13 @@ nltk.download(['punkt','stopwords'])
 import pickle
 
 def load_data(database_filepath):
-    pass
+    engine = create_engine('sqlite:///' + database_filepath)
+    df = pd.read_sql_table('DisasterResponse', engine)
+    X = df.message.values
+    Y = df.iloc[:,3:]
+    columns = df.columns
+
+    return X, Y, columns
 
 
 def tokenize(text):
