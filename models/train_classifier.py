@@ -78,6 +78,17 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    '''
+    INPUT:
+    model - (pipeline) The model to be evaluated
+    X_test - (numpy array) A subset of the array of messages in the dataframe
+    Y_test - (pandas dataframe) A subset of the dataframe corresponding to
+    the categories of the dataframe
+    category_names - (list) A list of the columns of df
+
+    OUTPUT:
+    None
+    '''
     # Get the values predicted
     y_pred = model.predict(X_test)
     predicted_categories = category_names[3:]
