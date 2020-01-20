@@ -108,7 +108,7 @@ def index():
             ],
 
             'layout': {
-                'title': 'Distribution of Message Categories not including Related',
+                'title': 'Distribution of Message Categories of those Related',
                 'yaxis': {
                     'title': "Count"
                 },
