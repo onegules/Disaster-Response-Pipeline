@@ -11,7 +11,44 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-    pass
+    categories = df['categories'].str.split(';',expand=True)
+    # Select the first row of the categories dataframe
+    row = categories.iloc[0]
+
+    # Get and save the category names to be made into column names
+    category_colnames = []
+    for words in row:
+        category_colnames.append(words[0:len(words)-2])
+
+    # Create the new columns with 0 or 1 in the corresponding rows
+    categories.columns = category_colnames
+    for column in categories:
+
+        # set each value to be the last character of the string
+        categories[column] = categories[column].str[-1]
+
+        # convert column from string to numeric
+        categories[column] = pd.to_numeric(categories[column])
+
+    # Remove rows that are not 0 or 1 in a given category
+    faulty_data_df = categories[categories['related'] == 2]
+    if(faulty_data_df.size != 0):
+        categories = categories[categories.related != 2]
+    else:
+        pass
+
+    # Drop the original categories column from `df`
+    df.drop('categories',axis=1,inplace=True)
+    df.drop('original',axis=1,inplace=True)
+
+    # Add the new categories columns to df
+    df = pd.concat([df,categories], axis=1)
+
+    # Drop any duplicates or NaN valuues
+    df.drop_duplicates(inplace=True)
+    df = df.dropna()
+
+    return df
 
 
 def save_data(df, database_filename):
