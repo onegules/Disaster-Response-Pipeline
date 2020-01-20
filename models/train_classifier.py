@@ -66,7 +66,8 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
-    pass
+    with open('DisasterModel', 'wb') as output:
+        pickle.dump(model, output, pickle.HIGHEST_PROTOCOL)
 
 
 def main():
