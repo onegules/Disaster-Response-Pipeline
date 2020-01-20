@@ -51,6 +51,17 @@ def tokenize(text):
 
 
 def build_model():
+    '''
+    INPUT:
+    None
+
+    OUTPUT:
+    cv -  (Pipeline) An optimized model
+
+    Description:
+    Creates a pipeline object and uses grid search to optimize and return the
+    optimized pipeline
+    '''
     # Create pipeline object
     pipeline = Pipeline([
         ('vect', HashingVectorizer(tokenizer=tokenize,n_features=2**4)),
