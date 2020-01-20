@@ -37,6 +37,13 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    '''
+    INPUT:
+    text - (str) Takes text and standardizes it
+
+    OUTPUT:
+    tokens - (list) Tokenized text
+    '''
     tokens = word_tokenize(text)
     tokens = [words for words in tokens if words not in stopwords.words("english")]
     return tokens
