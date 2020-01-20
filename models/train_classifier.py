@@ -28,7 +28,10 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
-    pass
+    tokens = word_tokenize(text)
+    tokens = [words for words in tokens if words not in stopwords.words("english")]
+    return tokens
+
 
 
 def build_model():
