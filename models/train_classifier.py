@@ -104,6 +104,14 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    '''
+    INPUT:
+    model - (pipeline) Object to be saved
+    model_filepath - (str) The path to the model
+
+    OUTPUT:
+    None
+    '''
     with open('DisasterModel', 'wb') as output:
         pickle.dump(model, output, pickle.HIGHEST_PROTOCOL)
 
