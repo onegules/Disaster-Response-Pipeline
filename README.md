@@ -7,11 +7,12 @@ https://uoa-eresearch.github.io/eresearch-cookbook/recipe/2014/11/20/conda/
 
 Given an anaconda enviroment, you need only install plotly. To do this run
 
-'''python
+```python
 conda install plotly
-'''
+```
 
 in your console.
+
 ### Step 1: Set up the model and data
 
 Run the following commands (in this order) in the project's root directory to set up the database and model.
