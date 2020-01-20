@@ -19,6 +19,18 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    '''
+    INPUT:
+    df - (pandas dataframe) df as defined in load_data
+
+    OUTPUT:
+    df - (pandas dataframe) df after it has been cleaned
+
+    Description:
+    Takes df and its categories column and splits the values into their own
+    columns and uses the information in the column to place a 1 or a 0
+    if the message (row) is part of that category
+    '''
     categories = df['categories'].str.split(';',expand=True)
     # Select the first row of the categories dataframe
     row = categories.iloc[0]
