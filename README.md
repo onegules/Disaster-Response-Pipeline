@@ -18,6 +18,9 @@ contains all the HTML information for the webpages. While run.py contains all
 information corresponding to the flask app (the backend). The run.py file also
 contains code for generating the graphics seen on the home page.
 
+This folder also contains a screenshot of what the disaster response web app
+should look like.
+
 ### The data folder
 
 The data folder contains all the data required to be able to run the project.
@@ -64,3 +67,6 @@ Run the following command in the app's directory to run the web app.
     `python run.py`
 
 Then, go to http://127.0.0.1:3001/ to access it on your local computer.
+
+
+![Alt text](/app/screenshot.png)
