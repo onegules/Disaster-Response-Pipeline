@@ -2,7 +2,7 @@
 
 ## The project
 
-This project uses disaster data from [Figure Eight][https://www.figure-eight.com/],
+This project uses disaster data from [Figure Eight](https://www.figure-eight.com/),
 cleans it and analyzes the messages coming in from users with natural language
 processing techniques to train an ML model. This ML model is then used in a
 flask web app ready for deployment. The web app can be used to take in new
