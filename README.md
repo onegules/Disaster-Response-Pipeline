@@ -69,4 +69,4 @@ Run the following command in the app's directory to run the web app.
 Then, go to http://127.0.0.1:3001/ to access it on your local computer.
 
 
-![Screenshot](app/screenshot.png?raw=true)
+![Screenshot](https://github.com/onegules/Disaster-Response-Pipeline/tree/master/app/screenshot.png)
