@@ -46,8 +46,14 @@ def tokenize(text):
     OUTPUT:
     tokens - (list) Tokenized text
     '''
-    tokens = word_tokenize(text)
+    lower_text = text.lower()
+    tokens = word_tokenize(lower_text)
+    lemmatizer = WordNetLemmatizer()
     tokens = [words for words in tokens if words not in stopwords.words("english")]
+
+    for element in tokens:
+        lemmatizer.lemmatize(element)
+
     return tokens
 
 
